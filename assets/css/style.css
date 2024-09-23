@@ -1,0 +1,59 @@
+@keyframes move-up-down {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    /* Mencegah scroll horizontal */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .your-element {
+        width: 100%;
+        /* Sesuaikan padding jika diperlukan */
+    }
+}
+
+@keyframes color-change {
+    0% {
+        color: black;
+    }
+
+    50% {
+        color: #6366f1;
+        /* Indigo */
+    }
+
+    100% {
+        color: rgb(0, 112, 112);
+    }
+}
+
+
+.hover\:animate-color-change:hover {
+    animation: color-change 1s forwards ease-out;
+}
