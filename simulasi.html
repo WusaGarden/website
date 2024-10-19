@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bioflok | Wusa Garden</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="shortcut icon" href="assets/img/Logo.png" type="image/x-icon" />
+</head>
+
+<body class="bg-gray-800">
+  <!-- Bar Navigasi -->
+  <nav class="fixed w-full z-50 bg-teal-900 shadow-lg transition-all duration-500 ease-in-out" x-data="{ open: false }">
+    <div class="container mx-auto max-w-full px-7">
+      <div class="flex justify-between items-center py-1">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <img src="assets/img/Logo.png" alt="Logo"
+            class="w-8 my-3 ml-2 md:ml-5 cursor-alias hover:animate-spin max-w-full" />
+          <span
+            class="text-2xl pl-3 font-bold text-white cursor-alias hover:text-teal-400 hover:skew-y-3 animate-pulse transition duration-300">
+            Wusa <span class="text-indigo-400">Garden</span>
+          </span>
+        </div>
+        <!-- Navbar Links (Desktop) -->
+        <div class="hidden md:flex items-center space-x-8 font-semibold text-white">
+          <a href="index.html" class="hover:text-gray-300 hover:-translate-y-1 transition duration-300">Beranda</a>
+          <a href="simulasi.html"
+            class="inline-block px-4 py-2 bg-gray-800 text-white rounded-lg font-semibold shadow-md hover:bg-indigo-400 hover:text-gray-800 transition duration-700">
+            Simulasi Bioflok
+          </a>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button @click="open = !open" class="text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Dropdown Menu (Mobile) -->
+      <div x-show="open" @click.away="open = false" class="md:hidden w-full mt-2">
+        <a href="index.html" class="block py-2 text-white hover:text-gray-800">Beranda</a>
+        <a href="simulasi.html"
+          class="inline-block mb-4 py-2 px-4 w-full text-center text-white bg-slate-900 rounded-lg">
+          Simulasi Bioflok
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Section Kalkulator -->
+  <section class="container mx-auto px-5 py-auto pt-32">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
+
+      <!-- Card 1: Volume Kolam -->
+      <div x-data="{ panjang: null, lebar: null, tinggi: 1, volume: null, padatTebar: null }"
+        class="bg-slate-900 p-6 rounded-lg shadow-lg">
+        <h2 class="text-sm md:text-md font-bold text-teal-500">POOL SIZE</h2>
+        <h2 class="text-md md:text-2xl font-bold mb-5">Ukuran Kolam</h2>
+
+        <!-- Input Panjang Kolam -->
+        <div class="mb-6">
+          <label for="panjang" class="block text-gray-200 font-medium">Panjang Kolam (m)</label>
+          <input type="number" id="panjang" placeholder="Masukkan panjang kolam" x-model.number="panjang"
+            @input="volume = (panjang && lebar) ? panjang * lebar * tinggi : null; padatTebar = volume ? volume * 100 : null"
+            class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+        </div>
+
+        <!-- Input Lebar Kolam -->
+        <div class="mb-6">
+          <label for="lebar" class="block text-gray-200 font-medium">Lebar Kolam (m)</label>
+          <input type="number" id="lebar" placeholder="Masukkan lebar kolam" x-model.number="lebar"
+            @input="volume = (panjang && lebar) ? panjang * lebar * tinggi : null; padatTebar = volume ? volume * 100 : null"
+            class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+        </div>
+
+        <!-- Section Hasil Ukuran Kolam -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Hasil Volume Kolam -->
+          <div class="mb-6">
+            <label for="volumeKolam" class="block text-gray-200 font-medium">Volume Kolam (m³)</label>
+            <input type="number" id="volumeKolam" :value="volume !== null ? volume : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+          <!-- Hasil Padat Tebar -->
+          <div class="mb-6">
+            <label for="padatTebar" class="block text-gray-200 font-medium">Padat Tebar (ekor/m³)</label>
+            <input type="number" id="padatTebar" :value="padatTebar !== null ? padatTebar : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Card 2: Penggunaan Bahan -->
+      <div x-data="{ volumeKolam: null, probiotik: null, molase: null, garam: null, kapur: null }"
+        class="bg-slate-900 p-6 rounded-lg shadow-lg">
+        <h2 class="text-sm md:text-md font-bold text-teal-500">USE OF MATERIALS</h2>
+        <h2 class="text-md md:text-2xl font-bold mb-5">Penggunaan Bahan</h2>
+
+        <!-- Input Volume Kolam -->
+        <div class="mb-6">
+          <label for="volumeKolam" class="block text-gray-200 font-medium">Volume Kolam (m³)</label>
+          <input type="number" id="volumeKolam" placeholder="Masukkan volume kolam" x-model.number="volumeKolam" @input="probiotik = volumeKolam ? volumeKolam * 25 : null;
+              molase = volumeKolam ? volumeKolam * 100 : null;
+              garam = volumeKolam ? volumeKolam * 1000 : null;
+              kapur = volumeKolam ? volumeKolam * 50 : null"
+            class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+        </div>
+
+        <!-- Section Hasil Penggunaan Bahan -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Hasil Probiotik -->
+          <div class="mb-0">
+            <label for="probiotik" class="block text-gray-200 font-medium">Probiotik (gr)</label>
+            <input type="text" id="probiotik" :value="probiotik !== null ? probiotik : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+
+          <!-- Hasil Molase -->
+          <div class="mb-0">
+            <label for="molase" class="block text-gray-200 font-medium">Molase (ml)</label>
+            <input type="text" id="molase" :value="molase !== null ? molase : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+
+          <!-- Hasil Garam -->
+          <div class="mb-0">
+            <label for="garam" class="block text-gray-200 font-medium">Garam (gr)</label>
+            <input type="text" id="garam" :value="garam !== null ? garam : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+
+          <!-- Hasil Kapur Dolomit -->
+          <div class="mb-0">
+            <label for="kapur" class="block text-gray-200 font-medium">Kapur Dolomit (gr)</label>
+            <input type="text" id="kapur" :value="kapur !== null ? kapur : ''" disabled
+              class="w-full px-4 py-2 mt-2 rounded-lg bg-slate-700 text-white placeholder-gray-400">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Penggunaan Pakan -->
+      <div x-data="{ jumlahIkan: null, beratRata: null, penggunaanPakan: null }"
+        class="bg-slate-900 p-6 rounded-lg shadow-lg">
+        <h2 class="text-sm md:text-md font-bold text-teal-500">FEED USE</h2>
+        <h2 class="text-md md:text-2xl font-bold mb-5">Penggunaan Pakan</h2>
+
+        <!-- Input Jumlah Ikan -->
+        <div class="mb-6">
+          <label for="jumlahIkan" class="block text-gray-200 font-medium">Jumlah Ikan (ekor)</label>
+          <input type="number" id="jumlahIkan" placeholder="Masukkan jumlah ikan" x-model.number="jumlahIkan"
+            class="w-full px-4 py-2 mt-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-slate-700 text-white">
+        </div>
+
+        <!-- Input Berat Rerata Ikan -->
+        <div class="mb-6">
+          <label for="beratRata" class="block text-gray-200 font-medium">Berat Rerata Ikan (kg)</label>
+          <input type="number" id="beratRata" placeholder="Masukkan berat rerata ikan" x-model.number="beratRata"
+            class="w-full px-4 py-2 mt-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-slate-700 text-white">
+        </div>
+
+        <!-- Hasil Penggunaan Pakan -->
+        <div class="mb-6">
+          <label for="penggunaanPakan" class="block text-gray-200 font-medium">Penggunaan Pakan (kg/hari)</label>
+          <input type="number"
+            :value="(jumlahIkan > 0 && beratRata > 0) ? (jumlahIkan * beratRata * 0.03).toFixed(2) : ''" disabled
+            class="w-full px-4 py-2 mt-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-slate-700 text-white">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+
+</html>
